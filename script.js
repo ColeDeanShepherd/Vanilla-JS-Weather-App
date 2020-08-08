@@ -71,27 +71,13 @@ async function mockFailLoadCurrentWeatherAsync(cityName, apiKey) {
 }
 
 function updateDomWithCurrentWeather(currentWeather) {
-  /*
-  <div id="weather">
-    <p id="location"></p>
-    <p id="time"></p>
-    <p id="summary"></p>
-    <p id="temperature"></p>
-  </div>
-  */
+  showWeatherContainer();
 
   // Update the location element.
   findElementByIdAndSetContents("location", currentWeather.name);
   
-  // // Try to find the time element.
-  // const timeElement = document.getElementById("time");
-
-  // // If we found the time element, update it.
-  // if (timeElement) {
-  //   timeElement.textContent = currentWeather.name;
-  // } else {
-  //   console.error("Couldn't find element with ID \"time\".");
-  // }
+  // Update the time element.
+  findElementByIdAndSetContents("time", dateToTimeString(unixTimestampSToDate(currentWeather.dt)));
   
   // Update the summary element.
   findElementByIdAndSetContents("summary", currentWeather.weather.map(w => w.main).join(", "));
@@ -123,6 +109,28 @@ function percentageToString(percentage) {
   return `${percentage}%`;
 }
 
+function unixTimestampSToDate(unixTimestampS) {
+  return new Date(1000 * unixTimestampS);
+}
+
+const dateDayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+function dateToTimeString(date) {
+  const dayName = dateDayNames[date.getDay()];
+  const hourString = dateHoursTo12HourString(date.getHours());
+  return `${dayName} ${hourString}`;
+}
+
+function dateHoursTo12HourString(hours) {
+  if (hours === 0) {
+    return "12 AM";
+  } else if (hours < 12) {
+    return `${hours} AM`;
+  } else {
+    return `${hours - 12} PM`;
+  }
+}
+
 function findElementByIdAndSetContents(elementId, elementContents) {
   // Try to find the element.
   const summaryElement = document.getElementById(elementId);
@@ -130,6 +138,20 @@ function findElementByIdAndSetContents(elementId, elementContents) {
   // // If we found the element, update it. Otherwise, log an error to the console.
   if (summaryElement) {
     summaryElement.innerHTML = elementContents;
+  } else {
+    console.error(`Couldn't find element with ID \"${elementId}\".`);
+  }
+}
+
+function showWeatherContainer() {
+  const elementId = "weather";
+
+  // Try to find the element.
+  const weatherContainerElement = document.getElementById(elementId);
+  
+  // // If we found the element, update it. Otherwise, log an error to the console.
+  if (weatherContainerElement) {
+    weatherContainerElement.style = "";
   } else {
     console.error(`Couldn't find element with ID \"${elementId}\".`);
   }
@@ -143,4 +165,9 @@ async function onLocationEntered(location) {
   updateDomWithCurrentWeather(currentWeather);
 }
 
-onLocationEntered("Seattle");
+function onLocationKeyDown(event) {
+  if (event.key === "Enter") {
+    onLocationEntered(event.target.value);
+    event.preventDefault();
+  }
+}
