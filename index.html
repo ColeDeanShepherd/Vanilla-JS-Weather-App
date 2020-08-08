@@ -1,0 +1,40 @@
+<!-- Declare to the browser that this document is HTML. -->
+<!DOCTYPE html>
+
+<!-- Top-level element of the HTML document - the "root" element. We declare that the page is in English (lang="en"). -->
+<html lang="en">
+
+  <!-- Contains metadata about the document -->
+  <head>
+    <!-- Declare that this document uses UTF-8 text encoding (most commonly used Unicode text encoding). -->
+    <meta charset="utf-8">
+
+    <!--
+    Ensures that:
+    - the page is the same width as the screen it is viewed on (width=device-width)
+    - that the page is not zoomed in or out when it loads initially (initial-scale=1)
+      
+    This is mainly to prevent mobile devices from displaying the web page like it would appear on a large screen,
+    but zoomed out. Instead, we want to dynamically lay out the web page to fit whichever screen it is displayed on
+    without requiring the user to zoom out.
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Sets the title of the page - the name of the browser tab, and what appears in search engines. -->
+    <title>Vanilla JS Weather App</title>
+  </head>
+
+  <!-- Contains the actual content of the page. -->
+  <body>
+    <!-- This app requires JavaScript to run, so we warn users if they have disabled JavaScript. -->
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+
+    <!--
+    Empty element that we will add children to through JavaScript.
+    We assign the element the ID "app" so we can easily find it in Javascript.
+    -->
+    <div id="app"></div>
+  </body>
+</html>
