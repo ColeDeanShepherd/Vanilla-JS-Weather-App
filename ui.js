@@ -172,7 +172,7 @@ class WeatherConditionElement {
 
   set condition(value) {
     // Update this element's icon & descriptive text.
-    this.iconElement.src = `http://openweathermap.org/img/w/${value.icon}.png`;
+    this.iconElement.src = `https://openweathermap.org/img/w/${value.icon}.png`;
     this.textElement.innerHTML = value.description;
   }
 }
