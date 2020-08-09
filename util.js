@@ -13,18 +13,38 @@ function unixTimestampSToDate(unixTimestampS) {
 
 const dateDayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-function dateToTimeString(date) {
-  const dayName = dateDayNames[date.getDay()];
-  const hourString = dateHoursTo12HourString(date.getHours());
-  return `${dayName} ${hourString}`;
+function dateDayToName(dateDay) {
+  const name = dateDayNames[dateDay];
+  return name;
 }
 
-function dateHoursTo12HourString(hours) {
-  if (hours === 0) {
-    return "12 AM";
-  } else if (hours < 12) {
-    return `${hours} AM`;
+const monthNames = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+
+function dateMonthToName(dateMonth) {
+  const name = monthNames[dateMonth];
+  return name;
+}
+
+function getZeroPaddedMinuteString(minutes) {
+  if (minutes < 10) {
+    return `0${minutes}`;
   } else {
-    return `${hours - 12} PM`;
+    return minutes.toString();
+  }
+}
+
+function dateTo12HourTimeString(date) {
+  const hour = date.getHours();
+  const minuteString = getZeroPaddedMinuteString(date.getMinutes());
+
+  if (hour === 0) {
+    return `12:${minuteString} AM`;
+  } else if (hour < 12) {
+    return `${hour}:${minuteString} AM`;
+  } else {
+    return `${hour - 12}:${minuteString} PM`;
   }
 }

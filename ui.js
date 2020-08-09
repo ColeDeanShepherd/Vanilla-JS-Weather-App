@@ -14,7 +14,8 @@ class LocationInputElement {
   }
   
   onLocationKeyDown(event) {
-    if (event.key === "Enter") {
+    const isEmpty = event.target.value.length === 0;
+    if (!isEmpty && (event.key === "Enter")) {
       if (this.onEnter) {
         this.onEnter(event.target.value);
       }
@@ -30,39 +31,51 @@ class WeatherElement {
     this.rootElement.className = "weather";
 
     this.locationElement = document.createElement("div");
+    this.locationElement.className = "location"
     this.rootElement.appendChild(this.locationElement);
 
     this.dateElement = document.createElement("div");
+    this.dateElement.className = "date";
     this.rootElement.appendChild(this.dateElement);
-
-    this.weatherConditionsElement = document.createElement("div");
-    this.rootElement.appendChild(this.weatherConditionsElement);
-
+    
     this.temperatureElement = document.createElement("div");
+    this.temperatureElement.className = "temperature";
     this.rootElement.appendChild(this.temperatureElement);
 
-    this.feelsLikeTemperatureElement = document.createElement("div");
-    this.rootElement.appendChild(this.feelsLikeTemperatureElement);
+    this.weatherConditionsElement = document.createElement("div");
+    this.weatherConditionsElement.className = "weather-conditions";
+    this.rootElement.appendChild(this.weatherConditionsElement);
 
-    this.lowTemperatureElement = document.createElement("div");
-    this.rootElement.appendChild(this.lowTemperatureElement);
+    this.additionalInfoElement = document.createElement("ul");
+    this.additionalInfoElement.className = "additional-info";
+    this.rootElement.appendChild(this.additionalInfoElement);
 
-    this.highTemperatureElement = document.createElement("div");
-    this.rootElement.appendChild(this.highTemperatureElement);
+    this.feelsLikeTemperatureElement = document.createElement("li");
+    this.additionalInfoElement.appendChild(this.feelsLikeTemperatureElement);
 
-    this.humidityElement = document.createElement("div");
-    this.rootElement.appendChild(this.humidityElement);
+    this.lowTemperatureElement = document.createElement("li");
+    this.additionalInfoElement.appendChild(this.lowTemperatureElement);
 
-    this.windSpeedElement = document.createElement("div");
-    this.rootElement.appendChild(this.windSpeedElement);
+    this.highTemperatureElement = document.createElement("li");
+    this.additionalInfoElement.appendChild(this.highTemperatureElement);
+
+    this.humidityElement = document.createElement("li");
+    this.additionalInfoElement.appendChild(this.humidityElement);
+
+    this.windSpeedElement = document.createElement("li");
+    this.additionalInfoElement.appendChild(this.windSpeedElement);
   }
 
-  set location(value) {
-    this.locationElement.innerHTML = value;
+  setLocation(city, country) {
+    this.locationElement.innerHTML = `${city}, ${country}`;
   }
 
   set date(value) {
-    this.dateElement.innerHTML = dateToTimeString(value);
+    const dayName = dateDayToName(value.getDay());
+    const monthName = dateMonthToName(value.getMonth());
+    const timeString = dateTo12HourTimeString(value);
+
+    this.dateElement.innerHTML = `As of: ${timeString}, ${dayName}, ${monthName} ${value.getDate()}, ${value.getFullYear()}`;
   }
 
   set weatherConditions(value) {
@@ -111,7 +124,7 @@ class WeatherElement {
 
 class WeatherConditionElement {
   constructor() {
-    this.rootElement = document.createElement("span");
+    this.rootElement = document.createElement("div");
     this.rootElement.className = "weather-condition";
 
     this.iconElement = document.createElement("img");
@@ -145,61 +158,3 @@ class ErrorElement {
     this.rootElement.style = "display: none";
   }
 }
-
-class App {
-  run() {
-    this.weatherContainerElement = document.getElementById("weatherContainer");
-    if (!this.weatherContainerElement) {
-      throw new Error("Couldn't find weather container.");
-    }
-    
-    this.locationInputElement = new LocationInputElement();
-    
-    this.locationInputElement.onEnter = newLocation => this.onLocationEntered(newLocation);
-  
-    this.weatherContainerElement.appendChild(this.locationInputElement.rootElement);
-  
-    this.weatherElement = new WeatherElement();
-    
-    this.weatherContainerElement.appendChild(this.weatherElement.rootElement);
-  
-    this.weatherElement.hide();
-    
-    this.errorElement = new ErrorElement();
-    
-    this.weatherContainerElement.appendChild(this.errorElement.rootElement);
-  
-    this.errorElement.hide();
-  }
-  
-  async onLocationEntered(location) {
-    // Load the current weather.
-    const currentWeather = await loadCurrentWeatherAsync(location, openWeatherMapApiKey);
-
-    // If loading succeeded, update the web page with current weather data.
-    if (currentWeather && (currentWeather.cod === 200)) {
-      this.updateWeatherElement(currentWeather);
-      this.weatherElement.show();
-      this.errorElement.hide();
-    } else {
-      this.errorElement.error = currentWeather.message;
-      this.errorElement.show();
-      this.weatherElement.hide();
-    }
-  }
-  
-  updateWeatherElement(currentWeather) {
-    this.weatherElement.location = currentWeather.name;
-    this.weatherElement.date = unixTimestampSToDate(currentWeather.dt);
-    this.weatherElement.weatherConditions = currentWeather.weather;
-    this.weatherElement.temperature = currentWeather.main.temp;
-    this.weatherElement.feelsLikeTemperature = currentWeather.main.feels_like;
-    this.weatherElement.lowTemperature = currentWeather.main.temp_min;
-    this.weatherElement.highTemperature = currentWeather.main.temp_max;
-    this.weatherElement.humidity = currentWeather.main.humidity;
-    this.weatherElement.windSpeed = currentWeather.wind.speed;
-  }
-}
-
-const app = new App();
-app.run();

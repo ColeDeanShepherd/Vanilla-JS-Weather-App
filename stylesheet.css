@@ -1,5 +1,15 @@
+/* Helper Classes */
+.center-text {
+  text-align: center;
+}
+
+.margin-bottom {
+  margin-bottom: 1em;
+}
+
 body {
-  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-family: sans-serif;
+  line-height: 1.4;
   padding: 0;
   margin: 0;
 }
@@ -9,27 +19,60 @@ body {
   margin-bottom: 1em;
 }
 
-.center-text {
-  text-align: center;
-}
-
 .location-input {
   width: 100%;
   max-width: 320px;
 }
 
-.margin-bottom {
-  margin-bottom: 1em;
-}
-
 .weather {
-  max-width: 640px;
+  max-width: 400px;
 
   margin: 0 auto;
   padding: 1em;
 
   border: 1px solid #ccc;
   border-radius: 8px;
+}
+
+.location {
+  font-weight: bold;
+}
+
+.date {
+  color: #777;
+}
+
+.temperature {
+  font-size: 2em;
+  margin: 1rem 0;
+}
+
+.weather-conditions {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 2em 0;
+}
+
+.weather-condition {
+  text-align: center;
+  padding: 0 1em;
+}
+
+.weather-condition p {
+  color: #777;
+  margin: 0;
+}
+
+.additional-info {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  padding: 0;
+}
+
+.additional-info li {
+  display: inline;
+  padding-right: 1em;
 }
 
 .error {
