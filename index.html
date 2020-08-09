@@ -25,14 +25,6 @@
     
     <!-- Tell the browser to use our CSS stylesheet "stylesheet.css". -->
     <link rel="stylesheet" href="stylesheet.css">
-
-    <!--
-    Tell the browser to load our JavaScript file "script.js".
-    "async" tells the browser to load the script "asynchronously", which means in the background while the rest of
-    this HTML document is being processed and displayed. Without "async", the browser would stop processing and displaying
-    the page until our script is done being loaded.
-    -->
-    <script async src="script.js"></script>
   </head>
 
   <!-- Contains the actual content of the page. -->
@@ -41,34 +33,18 @@
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
+    
+    <h1 class="header">Vanilla JS Weather App</h1>
 
     <!--
     Empty element that we will add children to through JavaScript.
-    We assign the element the ID "app" so we can easily find it in Javascript.
+    We assign the element the ID "weatherContainer" so we can easily find it in Javascript.
     -->
-    <div id="app">
-      <div class="header">
-        <h1>Vanilla JS Weather App</h1>
-        <input
-          type="text"
-          placeholder="Enter location (ex: &quot;Seattle&quot;)"
-          onkeydown="onLocationKeyDown(event)"
-          class="location-input" />
-      </div>
-
-      <div id="weather" style="display: none;">
-        <p id="location"></p>
-        <p id="time"></p>
-        <p id="summary"></p>
-        <p id="temperature"></p>
-        <p id="feels-like-temperature"></p>
-        <p id="low-temperature"></p>
-        <p id="high-temperature"></p>
-        <p id="humidity"></p>
-        <p id="wind"></p>
-      </div>
-
-      <p id="error" style="display: none;"></p>
-    </div>
+    <div id="weatherContainer"></div>
+    
+    <!--Tell the browser to load our JavaScript files.-->
+    <script src="util.js"></script>
+    <script src="weatherApi.js"></script>
+    <script src="main.js"></script>
   </body>
 </html>

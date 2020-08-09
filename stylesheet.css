@@ -9,12 +9,20 @@ body {
   margin-bottom: 1em;
 }
 
+.center-text {
+  text-align: center;
+}
+
 .location-input {
   width: 100%;
   max-width: 320px;
 }
 
-#weather {
+.margin-bottom {
+  margin-bottom: 1em;
+}
+
+.weather {
   max-width: 640px;
 
   margin: 0 auto;
@@ -24,7 +32,7 @@ body {
   border-radius: 8px;
 }
 
-#error {
+.error {
   color: red;
   text-align: center;
 }
