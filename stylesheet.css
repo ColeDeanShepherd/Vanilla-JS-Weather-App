@@ -7,6 +7,7 @@
   margin-bottom: 1em;
 }
 
+/* Override global browser defaults to make the page look nicer. */
 body {
   font-family: sans-serif;
   line-height: 1.4;
@@ -14,16 +15,18 @@ body {
   margin: 0;
 }
 
+/* Header Text */
 .header {
   text-align: center;
   margin-bottom: 1em;
 }
 
-.location-input {
+.city-input {
   width: 100%;
   max-width: 320px;
 }
 
+/* Weather Widget */
 .weather {
   max-width: 400px;
 
@@ -32,49 +35,62 @@ body {
 
   border: 1px solid #ccc;
   border-radius: 8px;
+
+  box-shadow: 0 2px 3px rgba(0,0,0,0.06);
 }
 
-.location {
+.weather .location {
   font-weight: bold;
 }
 
-.date {
+.weather .date {
   color: #777;
 }
 
-.temperature {
+.weather .temperature {
   font-size: 2em;
   margin: 1rem 0;
 }
 
-.weather-conditions {
+/* "Weather conditions" are short weather descriptors like "partly cloudy", "sunny", etc. */
+.weather .weather-conditions {
+  /* Child elements should be laid out left-to-right with line wrapping. */
   display: flex;
   flex-wrap: wrap;
+
   margin: 2em 0;
 }
 
-.weather-condition {
+.weather .weather-condition {
   text-align: center;
   padding: 0 1em;
 }
 
-.weather-condition p {
+.weather .weather-condition p {
   color: #777;
   margin: 0;
 }
 
-.additional-info {
+.weather .additional-info {
+  /*
+  Child elements should be laid out left-to-right with line wrapping.
+  Using flexbox even though children are text to prevent line-wrapping within each child -
+  this improved readability.
+  */
   display: flex;
   flex-wrap: wrap;
+
+  /* Dont add bullet points to child list elements. */
   list-style-type: none;
+
   padding: 0;
 }
 
-.additional-info li {
-  display: inline;
+.weather .additional-info li {
   padding-right: 1em;
 }
 
+/* Error Widget */
 .error {
   color: red;
   text-align: center;

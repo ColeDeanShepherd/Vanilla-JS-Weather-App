@@ -25,6 +25,9 @@
     
     <!-- Tell the browser to use our CSS stylesheet "stylesheet.css". -->
     <link rel="stylesheet" href="stylesheet.css">
+
+    <!-- Tell the browser to use "favicon.ico" as our web page's icon. -->
+    <link rel="icon" href="favicon.ico" type = "image/x-icon">
   </head>
 
   <!-- Contains the actual content of the page. -->
@@ -34,6 +37,7 @@
       You need to enable JavaScript to run this app.
     </noscript>
     
+    <!-- Header text at the top of the web page. -->
     <div class="header">
       <h1>Vanilla JS Weather App</h1>
       <h3>By: Cole Dean Shepherd</h3>
@@ -45,11 +49,24 @@
     -->
     <div id="weatherContainer"></div>
     
-    <!--Tell the browser to load our JavaScript files.-->
+    <!--Tell the browser to load our JavaScript files below .-->
+    <script src="config.js"></script>
     <script src="util.js"></script>
+
+    <!--
+    You can uncomment the line below & use functions from the file to test the web page with hard-coded, mock data
+    instead of using openweathermap.org's APIs. 
+    -->
     <!--<script src="mockWeatherApi.js"></script>-->
+
     <script src="weatherApi.js"></script>
     <script src="ui.js"></script>
     <script src="app.js"></script>
+
+    <script>
+      // Run the app!
+      const app = new App();
+      app.run();
+    </script>
   </body>
 </html>

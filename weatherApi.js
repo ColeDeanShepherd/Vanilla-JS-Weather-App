@@ -1,8 +1,7 @@
-// API key for openweathermap.org's weather API. You cannot use the API without including the API key in requests.
-const openWeatherMapApiKey = "b2e7fa5117000685ece320fc11924bcc";
+// This file contains functions to load data from openweathermap.org's APIs.
 
 async function loadCurrentWeatherAsync(cityName, apiKey) {
-  // Load current weather data for the given location using openweathermap.org, and store the HTTP response.
+  // Load current weather data for the given a city name using openweathermap.org, and store the HTTP response.
   const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=imperial&appid=${apiKey}`);
 
   // Handle errors loading the current weather data.

@@ -1,4 +1,7 @@
-const exampleCurrentWeather = {
+// This file contains functions enabling testing of the web page with hard-coded, mock data
+// instead of using openweathermap.org's APIs. 
+
+const mockCurrentWeather = {
   "coord": {
     "lon": -122.33,
     "lat": 47.61
@@ -61,7 +64,7 @@ const exampleCurrentWeather = {
 };
 
 async function mockLoadCurrentWeatherAsync(cityName, apiKey) {
-  return exampleCurrentWeather;
+  return mockCurrentWeather;
 }
 
 async function mockFailLoadCurrentWeatherAsync(cityName, apiKey) {
