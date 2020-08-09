@@ -1,6 +1,6 @@
 class App {
   run() {
-    // Find the for the city input, the weather widget, and an error widget.
+    // Find the container element for the city input, the weather widget, and an error widget.
     // Throw an error if we can't find it.
     this.weatherContainerElement = document.getElementById("weatherContainer");
     if (!this.weatherContainerElement) {

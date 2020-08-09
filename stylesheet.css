@@ -22,6 +22,7 @@ body {
 }
 
 .city-input {
+  /* Try to make the input as wide as possible, up to 320px. */
   width: 100%;
   max-width: 320px;
 }
