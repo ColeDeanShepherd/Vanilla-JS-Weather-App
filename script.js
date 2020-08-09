@@ -7,8 +7,13 @@ async function loadCurrentWeatherAsync(cityName, apiKey) {
 
   // Handle errors loading the current weather data.
   if (!response.ok) {
-    // TODO: improve
-    throw new Error();
+    // openweathermap.org will sometimes return a JSON body explaining the error. We detect this and return the JSON here.
+    const errorJson = response.json();
+    if (errorJson) {
+      return errorJson;
+    } else {
+      throw new Error(`Failed loading current weather for city ${cityName}.`);
+    }
   }
 
   // Extract current weather JSON out of the HTTP response.
@@ -71,8 +76,6 @@ async function mockFailLoadCurrentWeatherAsync(cityName, apiKey) {
 }
 
 function updateDomWithCurrentWeather(currentWeather) {
-  showWeatherContainer();
-
   // Update the location element.
   findElementByIdAndSetContents("location", currentWeather.name);
   
@@ -99,6 +102,30 @@ function updateDomWithCurrentWeather(currentWeather) {
   
   // Update the wind element.
   findElementByIdAndSetContents("wind", `Wind: ${currentWeather.wind.speed} mph`);
+  
+  // Show the weather container.
+  showWeatherContainer();
+}
+
+function updateDomWithError(error) {
+  // Update the location element.
+  findElementByIdAndSetContents("error", `ERROR: ${error}`);
+
+  showError();
+}
+
+function showError(error) {
+  const elementId = "error";
+
+  // Try to find the element.
+  const errorElement = document.getElementById(elementId);
+  
+  // // If we found the element, update it. Otherwise, log an error to the console.
+  if (errorElement) {
+    errorElement.style = "";
+  } else {
+    console.error(`Couldn't find element with ID \"${elementId}\".`);
+  }
 }
 
 function temperatureToString(temperature) {
@@ -161,8 +188,13 @@ async function onLocationEntered(location) {
   // Load the current weather.
   const currentWeather = await loadCurrentWeatherAsync(location, openWeatherMapApiKey);
 
-  // Update webpage with the current weather.
-  updateDomWithCurrentWeather(currentWeather);
+  // If loading succeeded, update the web page with current weather data.
+  if (currentWeather && (currentWeather.cod === 200)) {
+    // Update webpage with the current weather.
+    updateDomWithCurrentWeather(currentWeather);
+  } else {
+    updateDomWithError(currentWeather.message);
+  }
 }
 
 function onLocationKeyDown(event) {
