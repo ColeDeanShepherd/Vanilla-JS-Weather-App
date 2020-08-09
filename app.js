@@ -26,7 +26,7 @@ class App {
   
   async onLocationEntered(location) {
     // Load the current weather.
-    const currentWeather = await mockLoadCurrentWeatherAsync(location, openWeatherMapApiKey);
+    const currentWeather = await loadCurrentWeatherAsync(location, openWeatherMapApiKey);
 
     // If loading succeeded, update the web page with current weather data.
     if (currentWeather && (currentWeather.cod === 200)) {
