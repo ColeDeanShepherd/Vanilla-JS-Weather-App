@@ -35,8 +35,8 @@ class WeatherElement {
     this.dateElement = document.createElement("div");
     this.rootElement.appendChild(this.dateElement);
 
-    this.summaryElement = document.createElement("div");
-    this.rootElement.appendChild(this.summaryElement);
+    this.weatherConditionsElement = document.createElement("div");
+    this.rootElement.appendChild(this.weatherConditionsElement);
 
     this.temperatureElement = document.createElement("div");
     this.rootElement.appendChild(this.temperatureElement);
@@ -65,8 +65,15 @@ class WeatherElement {
     this.dateElement.innerHTML = dateToTimeString(value);
   }
 
-  set summary(value) {
-    this.summaryElement.innerHTML = value;
+  set weatherConditions(value) {
+    this.weatherConditionsElement.innerHTML = "";
+
+    for (const weatherCondition of value) {
+      const weatherConditionElement = new WeatherConditionElement();
+      weatherConditionElement.condition = weatherCondition;
+
+      this.weatherConditionsElement.appendChild(weatherConditionElement.rootElement);
+    }
   }
 
   set temperature(value) {
@@ -99,6 +106,24 @@ class WeatherElement {
 
   hide() {
     this.rootElement.style = "display: none";
+  }
+}
+
+class WeatherConditionElement {
+  constructor() {
+    this.rootElement = document.createElement("span");
+    this.rootElement.className = "weather-condition";
+
+    this.iconElement = document.createElement("img");
+    this.rootElement.appendChild(this.iconElement);
+
+    this.textElement = document.createElement("p");
+    this.rootElement.appendChild(this.textElement);
+  }
+
+  set condition(value) {
+    this.iconElement.src = `http://openweathermap.org/img/w/${value.icon}.png`;
+    this.textElement.innerHTML = value.description;
   }
 }
 
@@ -166,7 +191,7 @@ class App {
   updateWeatherElement(currentWeather) {
     this.weatherElement.location = currentWeather.name;
     this.weatherElement.date = unixTimestampSToDate(currentWeather.dt);
-    this.weatherElement.summary = currentWeather.weather.map(w => w.main).join(", ");
+    this.weatherElement.weatherConditions = currentWeather.weather;
     this.weatherElement.temperature = currentWeather.main.temp;
     this.weatherElement.feelsLikeTemperature = currentWeather.main.feels_like;
     this.weatherElement.lowTemperature = currentWeather.main.temp_min;
