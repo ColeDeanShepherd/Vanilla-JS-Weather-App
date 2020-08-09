@@ -1,4 +1,6 @@
-// This file contains various utility functions used by the web app.
+// This file contains various constants and utility functions used by the web app.
+
+const httpStatusCodeOk = 200;
 
 function temperatureToString(temperature) {
   return `${temperature}°F`;

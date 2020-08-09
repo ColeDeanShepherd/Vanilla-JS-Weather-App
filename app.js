@@ -35,7 +35,7 @@ class App {
     const currentWeather = await loadCurrentWeatherAsync(cityName, openWeatherMapApiKey);
 
     // If loading succeeded, update the web page with current weather data.
-    if (currentWeather && (currentWeather.cod === 200)) {
+    if (currentWeather && (currentWeather.cod === httpStatusCodeOk)) {
       this.updateWeatherElement(currentWeather);
       this.weatherElement.show();
       this.errorElement.hide();
